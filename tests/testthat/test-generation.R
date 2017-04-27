@@ -17,7 +17,7 @@ test_that("generate_tc() basic usage", {
     test_case <- generate_tc(trace)
     test_case <- generate_tc(trace)
     expect_equal(test_case$type, "testcase")
-    expect_match(test_case$source, "^test_that\\(")
+    expect_match(test_case$source, "test_that\\(")
     expect_true(run_test_case(test_case$source, list(add = function(a, b) a + b + 1)))
 })
 
@@ -31,7 +31,7 @@ test_that("generate_tc() basic usage - expressions", {
 
     test_case <- generate_tc(trace)
     expect_equal(test_case$type, "testcase")
-    expect_match(test_case$source, "^test_that\\(")
+    expect_match(test_case$source, "test_that\\(")
     expect_true(run_test_case(test_case$source, list(add = function(a, b) a + b + 1)))
 })
 
@@ -50,7 +50,7 @@ test_that("gen_tests() basic usage", {
         expect_match(files, c("tc-0.R"));
 
         contents <- read_file(files[1])
-        expect_match(contents, "^test_that\\(");
+        expect_match(contents, "test_that\\(");
     })
 })
 

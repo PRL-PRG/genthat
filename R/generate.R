@@ -114,7 +114,7 @@ generate_tc <- function(trace) {
 
   assignments <- lapply2(call_vals, function(val, name) paste0("\t", name, " <- ", as.character(val), "\n"))
   val_section <- paste(assignments, collapse="")
-  call_section <- paste0(func, "(", paste(sapply(call_exprs, as.character), collapse=", "), ")")
+  call_section <- paste0(func, "(", paste(sapply(call_exprs, deparse), collapse=", "), ")")
 
   test_body <- concat(
       "\t# expected return value\n",
@@ -129,6 +129,7 @@ generate_tc <- function(trace) {
   list(
     type = "testcase",
     source = concat(
+      "library(testthat)\n",
       "test_that(", deparse(func), ", {\n",
       test_body,
       "})"

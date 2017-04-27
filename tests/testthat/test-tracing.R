@@ -59,6 +59,25 @@ test_that("basic trace pushing", {
     expect_equal(counter, 1)
 })
 
+test_that("can serialize list passed as parameter", {
+    decorate_functions("length")
+
+    length(list(a = c(2L, 3L), b = c(4L, 5L)))
+
+    undecorate_all()
+
+    counter <- 0L
+    while (traces$has_next()) {
+        counter <- counter + 1L
+        trace <- traces$get_next()
+        expect_equal(trace$func, "fn1")
+        #todo: expect_equal(trace$args, "list(call=list(quote(x),quote(y+x)),vals=list(x=42L,y=15L))")
+        expect_equal(trace$retv, "2L")
+    }
+    expect_equal(counter, 1)
+})
+
+
 test_that("tracing - names of function parameters enclosed in backticks are supported", {
     fn1 <- function(a, `b c`, `function`) { a + `b c` + `function` + 1L }
 
