@@ -45,6 +45,7 @@ gen_from_package <- function(pkgs_to_trace, pkgs_to_run=pkgs_to_trace,
                              filter=NULL,
                              prune_tests=FALSE,
                              quiet=TRUE,
+                             lib_paths=NULL,
                              ...) {
 
     if (prune_tests) {
@@ -70,7 +71,7 @@ gen_from_package <- function(pkgs_to_trace, pkgs_to_run=pkgs_to_trace,
     }
 
     working_dir <- tempfile(pattern="genthat-gen_from_package")
-    files <- lapply(pkgs_to_run, extract_package_code, types=types, output_dir=working_dir, filter=filter)
+    files <- lapply(pkgs_to_run, extract_package_code, lib_paths=lib_paths, types=types, output_dir=working_dir, filter=filter)
     files <- unlist(files)
 
     if (length(files) == 0) {
@@ -82,6 +83,7 @@ gen_from_package <- function(pkgs_to_trace, pkgs_to_run=pkgs_to_trace,
         files_to_run=files,
         action=action,
         quiet=quiet,
+        lib_paths=lib_paths,
         ...
     )
 

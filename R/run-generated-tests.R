@@ -10,7 +10,7 @@ test_generated_file <- function(test) {
         testthat::test_env()
     }
 
-    testthat::test_file(test, reporter="stop", wrap=FALSE, env=env)
+    testthat::test_file(test, reporter="stop", env=env)
 }
 
 #' @export

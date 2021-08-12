@@ -2,7 +2,9 @@
 #' @export
 #'
 # TODO: support commentDontrun, commentDonttest
-extract_package_code <- function(pkg, pkg_dir=find.package(pkg),
+extract_package_code <- function(pkg,
+                                 lib_paths=NULL,
+                                 pkg_dir=find.package(pkg),
                                  types=c("examples", "tests", "vignettes", "all"),
                                  output_dir=tempfile(pattern="genthat-extract_package"),
                                  filter=NULL) {
@@ -32,7 +34,7 @@ extract_package_code <- function(pkg, pkg_dir=find.package(pkg),
         output <- file.path(output_dir, type)
         stopifnot(dir.exists(output) || dir.create(output, recursive=TRUE))
 
-        files <- fun(pkg, pkg_dir, output_dir=output)
+        files <- fun(pkg, pkg_dir, output_dir=output, lib_paths=lib_paths)
 
         if (!is.null(filter)) {
             files <- files[grepl(filter, tools::file_path_sans_ext(files))]
@@ -44,7 +46,7 @@ extract_package_code <- function(pkg, pkg_dir=find.package(pkg),
 }
 
 #' @importFrom tools Rd_db Rd2ex
-extract_package_examples <- function(pkg, pkg_dir, output_dir) {
+extract_package_examples <- function(pkg, pkg_dir, output_dir, lib_paths=NULL) {
     db <- tryCatch({
         tools::Rd_db(basename(pkg_dir), lib.loc=dirname(pkg_dir))
     }, error=function(e) {
@@ -82,7 +84,7 @@ extract_package_examples <- function(pkg, pkg_dir, output_dir) {
     na.omit(examples)
 }
 
-extract_package_tests <- function(pkg, pkg_dir, output_dir) {
+extract_package_tests <- function(pkg, pkg_dir, output_dir, lib_paths=NULL) {
     test_dir <- file.path(pkg_dir, "tests")
 
     if (!dir.exists(test_dir)) {
@@ -100,8 +102,8 @@ extract_package_tests <- function(pkg, pkg_dir, output_dir) {
 }
 
 #' @importFrom tools pkgVignettes checkVignettes
-extract_package_vignettes <- function(pkg, pkg_dir, output_dir) {
-    vinfo <- tools::pkgVignettes(pkg, source=T)
+extract_package_vignettes <- function(pkg, pkg_dir, output_dir, lib_paths=NULL) {
+    vinfo <- tools::pkgVignettes(pkg, source=T, lib.loc=lib_paths)
     if (length(vinfo$docs) == 0) {
         return(character())
     }
@@ -111,11 +113,11 @@ extract_package_vignettes <- function(pkg, pkg_dir, output_dir) {
         # sources in the R code. It might actually run the vignettes as well.
         # That is a pity, but there is no way to tell it not to (the tangle is
         # needed to it extracts the R code)
-        tools::checkVignettes(pkg, pkg_dir, tangle=TRUE, weave=FALSE, workdir="src")
+        tools::checkVignettes(pkg, pkg_dir, tangle=TRUE, weave=FALSE, workdir="src", lib.loc=lib_paths)
     }
 
     # check if there are some sources
-    vinfo <- tools::pkgVignettes(pkg, source=T)
+    vinfo <- tools::pkgVignettes(pkg, source=T, lib.loc=lib_paths)
     files <- as.character(unlist(vinfo$sources))
     if (length(files) == 0) {
         return(character())
