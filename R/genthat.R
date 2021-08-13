@@ -217,6 +217,14 @@ gen_from_package <- function(pkgs_to_trace, pkgs_to_run=pkgs_to_trace,
             }
         }
 
+        # Record the return value of runnable tests
+        lapply(result$output,
+            function(Rfile) {
+                extfile <- gsub(".R$", ".ext", Rfile)
+                try(record_test_exts(Rfile, extfile))
+            }
+        )
+
         attr(result, "errors") <- errors
         attr(result, "stats") <- c(
             "all"=nrow(tracing),
@@ -371,6 +379,7 @@ generate_action <- function(trace, output_dir, keep_failed_trace=FALSE) {
     tryCatch({
         testfile <- generate_test_file(trace, output_dir)
         log_debug("Saving test into: ", testfile)
+
         error <- NA
 
         if (getOption("genthat.keep_all_traces", FALSE)) {

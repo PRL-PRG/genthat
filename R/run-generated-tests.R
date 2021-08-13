@@ -10,7 +10,8 @@ test_generated_file <- function(test) {
         testthat::test_env()
     }
 
-    testthat::test_file(test, reporter="stop", wrap=FALSE, env=env)
+    capture.output(r <- { source(test, local=env); env$genthat_extracted_call() })
+    r
 }
 
 #' @export
@@ -29,10 +30,6 @@ run_generated_test <- function(tests, quiet=TRUE) {
             }
 
             time <- stopwatch(res <- test_generated_file(test))
-
-            if (length(res) == 0) {
-                stop("testthat::test_file result was empty")
-            }
 
             time <- as.numeric(time, units="secs")
 
