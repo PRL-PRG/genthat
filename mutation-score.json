@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "mutator",
-  "message": "failing",
-  "color": "red"
+  "message": "81.7% -9.1/+6.5% (95% CI)",
+  "color": "green"
 }
