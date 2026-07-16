@@ -12,7 +12,9 @@ Authors@R: c(
    person("Michal", "Vacha", email="michal.vacha@live.com", role="ctb"),
    person("Lei", "Zhao", email="leizhao833@gmail.com", role="ctb")
   )
-Description: Extracting testthat compatible tests from runnable code
+Description: Generates 'testthat' compatible unit tests by tracing the
+    execution of runnable R code, recording the arguments and return values
+    of function calls, and turning them into reproducible test cases.
 License: GPL (>= 2)
 Depends: R (>= 3.4.0)
 Imports:
@@ -41,4 +43,3 @@ Remotes:
 LazyData: TRUE
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-SystemRequirements: C++11
