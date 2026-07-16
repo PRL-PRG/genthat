@@ -9,10 +9,12 @@ compute_tests_coverage <- function(path, tests, quiet=TRUE) {
     tmp=tempfile(pattern="genthat-test-coverage-", fileext=".RDS")
     on.exit(if (file.exists(tmp)) file.remove(tmp))
 
+    # deparse the path too: raw interpolation would break on Windows paths,
+    # where backslashes (e.g. C:\Users) are parsed as string escapes.
     code <- sprintf(
-        'saveRDS(genthat:::do_compute_tests_coverage(%s), "%s")',
+        'saveRDS(genthat:::do_compute_tests_coverage(%s), %s)',
         paste0(deparse(tests, control=c()), collapse=""),
-        tmp
+        deparse(tmp)
     )
 
     covr::package_coverage(path, type="none", code=code, quiet=quiet)
