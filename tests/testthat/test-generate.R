@@ -55,7 +55,9 @@ test_that("generate adds seed", {
     trace <- create_trace("f", "p", args=NULL, retv=1, seed=seed)
     test <- generate_test(trace)
 
-    expect_equal(test[2], ".Random.seed <<- .ext.seed")
+    # the header separates sections with blank lines, so match on presence
+    # rather than a fixed line index
+    expect_true(".Random.seed <<- .ext.seed" %in% test)
     expect_equal(attr(test, "externals"), list2env(list(.ext.seed=seed), parent=emptyenv()))
 })
 

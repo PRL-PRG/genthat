@@ -19,14 +19,19 @@ test_that("test failure", {
     x <- run_generated_code("test_that('x', expect_false(TRUE))")
 
     expect_true(is.na(x))
-    expect_equivalent(attr(x, "errors"), "Test failed: 'x'\n* TRUE isn't false.")
+    # the exact wording of the failure comes from testthat and varies between
+    # versions, so only assert on the stable parts
+    expect_match(attr(x, "errors"), "Test failed: 'x'", fixed=TRUE)
+    expect_match(attr(x, "errors"), "TRUE", fixed=TRUE)
+    expect_match(attr(x, "errors"), "FALSE", fixed=TRUE)
 })
 
 test_that("test exception", {
     x <- run_generated_code("test_that('x', stop('problem'))")
 
     expect_true(is.na(x))
-    expect_equivalent(attr(x, "errors"), "Test failed: 'x'\n* problem\n1: stop(\"problem\")")
+    expect_match(attr(x, "errors"), "Test failed: 'x'", fixed=TRUE)
+    expect_match(attr(x, "errors"), "problem", fixed=TRUE)
 })
 
 test_that("test no tests", {

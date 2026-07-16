@@ -6,9 +6,8 @@ Description: Example R project.
 License: GPL (>= 2)
 Imports: testthat
 Suggests: knitr, rmarkdown, roxygen2
-LazyData: TRUE
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-01-21 22:01:29 UTC; krikava
-Built: R 3.4.3; ; 2018-01-21 22:01:29 UTC; unix
+Packaged: 2026-07-16 17:40:33 UTC; pierre
+Built: R 4.6.1; ; 2026-07-16 17:40:34 UTC; unix

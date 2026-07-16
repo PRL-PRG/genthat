@@ -10,7 +10,25 @@ test_generated_file <- function(test) {
         testthat::test_env()
     }
 
-    testthat::test_file(test, reporter="stop", wrap=FALSE, env=env)
+    # Since testthat's 3rd edition the "stop" reporter no longer aborts on the
+    # first failing expectation (and the `wrap` argument is gone), so we collect
+    # the results with a silent reporter and raise ourselves if any expectation
+    # failed or errored.
+    results <- testthat::test_file(test, reporter="silent", env=env)
+
+    problems <- unlist(lapply(results, function(res) {
+        vapply(
+            Filter(function(e) inherits(e, c("expectation_failure", "expectation_error")), res$results),
+            function(e) sprintf("Test failed: '%s'\n* %s", res$test, trimws(conditionMessage(e))),
+            character(1)
+        )
+    }))
+
+    if (length(problems) > 0) {
+        stop(paste(problems, collapse="\n"))
+    }
+
+    results
 }
 
 #' @export
