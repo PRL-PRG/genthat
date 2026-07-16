@@ -1,6 +1,8 @@
 #' @importFrom covr package_coverage
 #' @export
 #
+# nocov start: drives covr itself, so it cannot run under covr instrumentation
+# (nested covr); test-coverage.R skips under covr, leaving these lines uncovered.
 compute_tests_coverage <- function(path, tests, quiet=TRUE) {
     stopifnot(is_chr_scalar(path), file.exists(path))
 
@@ -77,3 +79,4 @@ do_compute_tests_coverage <- function(tests) {
     attr(result, "raw_coverage") <- covr::tally_coverage(get_coverage())
     result
 }
+# nocov end
