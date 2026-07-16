@@ -58,7 +58,10 @@ extract_package_examples <- function(pkg, pkg_dir, output_dir) {
     files <- names(db)
 
     examples <- sapply(files, function(x) {
-        f <- file.path(output_dir, paste0(basename(x), ".R"))
+        # Rd_db entry names include the `.Rd` suffix on older R but not on
+        # newer versions; strip it so the output name is stable across R
+        # versions (e.g. always `My-add.R`, never `My-add.Rd.R`).
+        f <- file.path(output_dir, paste0(sub("\\.Rd$", "", basename(x)), ".R"))
         tools::Rd2ex(db[[x]], f, defines=NULL)
 
         if (!file.exists(f)) {

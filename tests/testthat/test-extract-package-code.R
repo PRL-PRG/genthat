@@ -2,13 +2,13 @@ context("extract-package-code")
 
 test_that("extract package code work on sample package", {
     skip_on_cran()
-    skip_on_travis()
+    skip_on_ci()
 
     tmp <- tempfile()
     on.exit(unlink(tmp, recursive=TRUE))
 
     with_test_pkgs({
-        examples <- file.path(tmp, "examples", c("My-add.Rd.R", "My-call.Rd.R", "My-public.Rd.R"))
+        examples <- file.path(tmp, "examples", c("My-add.R", "My-call.R", "My-public.R"))
         tests <- file.path(tmp, "tests", "testthat.R")
         vignettes <- file.path(tmp, "vignettes",
             c("my-ext-vignette-notrace.R", "my-ext-vignette-trace.R", "my-vignette.R"))

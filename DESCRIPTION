@@ -37,6 +37,7 @@ Suggests:
     rmarkdown,
     readr,
     roxygen2 (>= 5.0.0),
+    stringr,
     mutator
 Remotes:
     PRL-PRG/mutator

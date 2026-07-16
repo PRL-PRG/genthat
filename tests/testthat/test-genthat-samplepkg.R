@@ -31,7 +31,7 @@ library(stringr)
 
 test_that("trace_package works on a single file from sample package", {
     skip_on_cran()
-    skip_on_travis()
+    skip_on_ci()
 
     with_test_pkgs({
         output_dir <- tempfile()
@@ -57,7 +57,7 @@ test_that("trace_package works on a single file from sample package", {
 
 test_that("trace_package works on a sample package", {
     skip_on_cran()
-    skip_on_travis()
+    skip_on_ci()
 
     with_test_pkgs({
         output_dir <- tempfile()
@@ -117,7 +117,7 @@ test_that("trace_package works on a sample package", {
 
 test_that("gen_from_package works on a sample package", {
     skip_on_cran()
-    skip_on_travis()
+    skip_on_ci()
 
     ret <- with_test_pkgs({
         output_dir <- tempfile()
@@ -156,7 +156,7 @@ test_that("gen_from_package works on a sample package", {
 
 test_that("gen_from_package works on a sample package", {
     skip_on_cran()
-    skip_on_travis()
+    skip_on_ci()
 
     with_test_pkgs({
         output_dir <- tempfile()
