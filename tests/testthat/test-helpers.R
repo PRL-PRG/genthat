@@ -99,7 +99,7 @@ test_that("next_file_in_row works with/without extensions", {
 })
 
 test_that("next_file_in_row works with existing files", {
-    f <- tempfile()
+    f <- chartr("\\", "/", tempfile())
     on.exit(file.remove(f))
     writeLines("1", f)
 
@@ -108,7 +108,7 @@ test_that("next_file_in_row works with existing files", {
 })
 
 test_that("next_file_in_row works", {
-    f <- tempfile()
+    f <- chartr("\\", "/", tempfile())
 
     f1 <- next_file_in_row(f)
     on.exit(file.remove(f1))

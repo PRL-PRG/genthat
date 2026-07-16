@@ -15,7 +15,7 @@ test_that("format_calling_args", {
 })
 
 test_that("generate_test", {
-    tmp <- tempfile()
+    tmp <- chartr("\\", "/", tempfile())
     on.exit(unlink(tmp, recursive=TRUE))
 
     t1 <- create_trace(fun="c", pkg=NULL, args=list("1"), retv="1")

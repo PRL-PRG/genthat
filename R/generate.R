@@ -149,7 +149,7 @@ save_test <- function(pkg, fun, code, output_dir) {
     stopifnot(is.character(code), length(code) > 0)
     stopifnot(is_chr_scalar(output_dir))
 
-    dname <- file.path(output_dir, pkg, fun)
+    dname <- file.path(output_dir, sanitize_path_name(pkg), sanitize_path_name(fun))
     stopifnot(dir.exists(dname) || dir.create(dname, recursive=TRUE))
 
     fname <- next_file_in_row(file.path(dname, "test.R"))

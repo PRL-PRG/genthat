@@ -368,6 +368,18 @@ stopwatch <- function(expr) {
     Sys.time() - time
 }
 
+# Percent-encode characters that are invalid in file names on Windows
+# (< > : " / \ | ? *) so names like the replacement function `gg<-` can be
+# used as directory names. Regular names are left unchanged.
+sanitize_path_name <- function(name) {
+    reserved <- c("<"="%3C", ">"="%3E", ":"="%3A", "\""="%22",
+                  "/"="%2F", "\\"="%5C", "|"="%7C", "?"="%3F", "*"="%2A")
+    for (ch in names(reserved)) {
+        name <- gsub(ch, reserved[[ch]], name, fixed=TRUE)
+    }
+    name
+}
+
 next_file_in_row <- function(path) {
     stopifnot(nchar(path) > 0)
 

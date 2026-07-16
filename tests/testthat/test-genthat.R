@@ -21,7 +21,7 @@ test_that("tracing control work", {
 })
 
 test_that("process_traces with export action work", {
-    tmp <- tempfile()
+    tmp <- chartr("\\", "/", tempfile())
 
     on.exit({
         unlink(tmp, recursive=TRUE)
@@ -55,7 +55,7 @@ test_that("process_traces with export action work", {
 
 test_that("process_traces with generate action work", {
 
-    tmp <- tempfile()
+    tmp <- chartr("\\", "/", tempfile())
 
     on.exit({
         unlink(tmp, recursive=TRUE)

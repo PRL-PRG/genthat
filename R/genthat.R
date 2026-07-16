@@ -359,7 +359,7 @@ save_trace_file <- function(trace, output_dir, name) {
     pkg <- if (is.null(trace$pkg)) "_NULL_" else trace$pkg
     fun <- if (is.null(trace$fun)) "_NULL_" else trace$fun
 
-    dname <- file.path(output_dir, pkg, fun)
+    dname <- file.path(output_dir, sanitize_path_name(pkg), sanitize_path_name(fun))
     stopifnot(dir.exists(dname) || dir.create(dname, recursive=TRUE))
 
     fname <- next_file_in_row(file.path(dname, paste0(name, ".RDS")))
