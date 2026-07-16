@@ -1,5 +1,4 @@
 ^Makefile$
-^\.travis.yml$
 ^tmp$
 ^Dockerfile$
 ^docker-run$
@@ -12,7 +11,6 @@
 ^\.gitconfig$
 ^\.gitignore$
 ^\.idea$
-^\.travis.yml$
 ^TAGS$
 ^genthat\.Rproj$
 ^genthat_.*.tar.gz$
@@ -22,3 +20,4 @@
 ^.*\.RDS$
 ^\.dockerignore$
 ^\.gdb_history$
+^\.github$

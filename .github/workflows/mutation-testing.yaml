@@ -1,0 +1,22 @@
+# Runs mutator mutation testing via the reusable workflow from PRL-PRG/mutator.
+# See the "Continuous integration" section of the mutator README for all inputs.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+name: mutation-testing
+
+jobs:
+  mutation-testing:
+    # Pinned to the mutator package release; the workflow tag tracks the package version.
+    uses: PRL-PRG/mutator/.github/workflows/mutation-testing.yaml@v0.1.1
+    # contents: write lets the reusable workflow publish the badge JSON to gh-pages.
+    permissions:
+      contents: write
+    with:
+      target-margin: "0.10"
+      # Publishes mutation-results/mutation-score.json to the gh-pages branch
+      # (skipped on pull_request) for the shields.io badge in README.md.
+      deploy-badge: true
