@@ -2,11 +2,28 @@
 #include <R.h>
 
 #include <string>
+#include <vector>
 
 #include "Utils.h"
+#include "compat.h"
 
 using namespace Rcpp;
 using namespace std;
+
+// Collects an object's (tag, value) attribute pairs so they can be iterated in
+// C++ afterwards. Used as the callback for R_mapAttrib (the API replacement for
+// walking the non-API ATTRIB pairlist). The callback itself must not raise a
+// C++ exception, as it is invoked from R's C code, so it only accumulates the
+// SEXPs; the actual (possibly throwing) serialization happens once it returns.
+struct attrib_pair {
+    SEXP tag;
+    SEXP value;
+};
+
+static SEXP collect_attrib(SEXP tag, SEXP value, void *data) {
+    static_cast<std::vector<attrib_pair> *>(data)->push_back({tag, value});
+    return nullptr; // keep iterating
+}
 
 // options for deparse
 // from Defn.h
@@ -114,13 +131,16 @@ private:
 
         vector<string> elems;
 
-        for (SEXP a = ATTRIB(s); !Rf_isNull(a); a = CDR(a)) {
-            SEXP tag = TAG(a);
+        vector<attrib_pair> attribs;
+        R_mapAttrib(s, collect_attrib, &attribs);
+
+        for (auto const &a : attribs) {
+            SEXP tag = a.tag;
 
             if (tag == Rf_install("srcref")) {
                 continue;
             } else if (tag == R_NamesSymbol) {
-                if (XLENGTH(CAR(a)) == 0) {
+                if (XLENGTH(a.value) == 0) {
                     // naming for lists is taken care of in serialize VECSXP, but
                     // there is a special case of empty names attribute (cf. #116).
                     elems.push_back("names=character()");
@@ -128,7 +148,7 @@ private:
                     // for lists we handle it directly while creating the list
                     // call (eg. list(a=1, b=2)), but for vectors we do not
                     // since they are handled by deparse call
-                    elems.push_back("names=" + serialize(CAR(a), true));
+                    elems.push_back("names=" + serialize(a.value, true));
                 }
             } else {
                 string name = attribute_name(tag);
@@ -137,7 +157,7 @@ private:
                     continue;
                 }
 
-                elems.push_back(name + "=" + serialize(CAR(a), true));
+                elems.push_back(name + "=" + serialize(a.value, true));
             }
         }
 
@@ -376,14 +396,14 @@ public:
 
             visited_environments.insert(s);
 
-            SEXP parent = ENCLOS(s);
+            SEXP parent = R_ParentEnv(s);
             SEXP names = R_lsInternal3(s, TRUE, FALSE);
             int n = XLENGTH(names);
 
             string elems;
             for (int i = 0; i < n; i++) {
                 const char *key = CHAR(STRING_ELT(names, i));
-                SEXP value = Rf_findVarInFrame(s, Rf_install(key));
+                SEXP value = R_getVarEx(Rf_install(key), s, FALSE, R_UnboundValue);
 
                 elems += escape_name(key) + "=" + serialize(value, true);
                 elems += i + 1 < n ? ", " : "";
@@ -506,7 +526,7 @@ public:
             RObject protected_s(s);
 
             SEXP extracted = extract_closure(s);
-            SEXP env = CLOENV(extracted);
+            SEXP env = R_ClosureEnv(extracted);
             string env_code = environment_name_as_code(env);
 
             // if this is empty, the environment is not a empty / base / package / namespace environment
