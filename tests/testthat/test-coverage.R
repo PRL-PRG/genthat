@@ -1,6 +1,12 @@
 context("ccovrage")
 
 test_that("test coverage", {
+    # compute_tests_coverage() runs covr on the target package. When genthat
+    # itself is being instrumented (the test-coverage / mutation-testing
+    # workflows), this nests covr inside covr, which does not work. The
+    # function is still exercised by the regular R CMD check run.
+    skip_on_covr()
+
     with_test_pkgs({
         t1 <- tempfile(pattern="t1")
         t2 <- tempfile(pattern="t2")
