@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper below."
+title: "genthat: A Framework for Unit Tests Generation"
+abstract: >-
+  Generates 'testthat' compatible unit tests by tracing the execution of
+  runnable R code, recording the arguments and return values of function
+  calls, and turning them into reproducible test cases.
+type: software
+url: "https://github.com/PRL-PRG/genthat"
+repository-code: "https://github.com/PRL-PRG/genthat"
+license: GPL-2.0-or-later
+authors:
+  - family-names: "Křikava"
+    given-names: "Filip"
+    email: "krikava@gmail.com"
+  - family-names: "Tsegelskyi"
+    given-names: "Roman"
+    email: "roman.tsegelskyi@gmail.com"
+  - family-names: "Maj"
+    given-names: "Petr"
+    email: "peta.maj82@gmail.com"
+  - family-names: "Ghibellini"
+    given-names: "Filippo"
+    email: "f.ghibellini@gmail.com"
+  - family-names: "Vacha"
+    given-names: "Michal"
+    email: "michal.vacha@live.com"
+  - family-names: "Zhao"
+    given-names: "Lei"
+    email: "leizhao833@gmail.com"
+preferred-citation:
+  type: conference-paper
+  title: "Tests from Traces: Automated Unit Test Extraction for R"
+  authors:
+    - family-names: "Křikava"
+      given-names: "Filip"
+    - family-names: "Vitek"
+      given-names: "Jan"
+  collection-title: >-
+    Proceedings of the 27th ACM SIGSOFT International Symposium on Software
+    Testing and Analysis (ISSTA 2018)
+  conference:
+    name: >-
+      27th ACM SIGSOFT International Symposium on Software Testing and
+      Analysis (ISSTA 2018)
+  year: 2018
+  start: 232
+  end: 241
+  publisher:
+    name: "ACM"
+    city: "New York"
+    country: "US"
+  doi: "10.1145/3213846.3213863"
+  url: "https://doi.org/10.1145/3213846.3213863"

@@ -16,6 +16,7 @@ Description: Generates 'testthat' compatible unit tests by tracing the
     execution of runnable R code, recording the arguments and return values
     of function calls, and turning them into reproducible test cases.
 License: GPL (>= 2)
+Encoding: UTF-8
 Depends: R (>= 3.4.0)
 Imports:
     codetools,

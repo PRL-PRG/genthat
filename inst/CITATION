@@ -1,0 +1,28 @@
+citHeader("To cite genthat in publications use:")
+
+bibentry(
+  bibtype  = "InProceedings",
+  title    = "Tests from Traces: Automated Unit Test Extraction for {R}",
+  author   = c(
+    person("Filip", "Křikava"),
+    person("Jan", "Vitek")
+  ),
+  booktitle = paste(
+    "Proceedings of the 27th ACM SIGSOFT International Symposium",
+    "on Software Testing and Analysis (ISSTA 2018)"
+  ),
+  year      = "2018",
+  pages     = "232--241",
+  publisher = "ACM",
+  address   = "New York, NY, USA",
+  doi       = "10.1145/3213846.3213863",
+  url       = "https://doi.org/10.1145/3213846.3213863",
+  textVersion = paste(
+    "Filip Křikava and Jan Vitek (2018).",
+    "Tests from Traces: Automated Unit Test Extraction for R.",
+    "In Proceedings of the 27th ACM SIGSOFT International Symposium",
+    "on Software Testing and Analysis (ISSTA 2018), pp. 232-241.",
+    "ACM, New York, NY, USA.",
+    "doi:10.1145/3213846.3213863."
+  )
+)

@@ -21,3 +21,4 @@
 ^\.dockerignore$
 ^\.gdb_history$
 ^\.github$
+^CITATION\.cff$
