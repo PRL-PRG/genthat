@@ -4,6 +4,7 @@ genthat - test case generation for R
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/PRL-PRG/genthat/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PRL-PRG/genthat/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/PRL-PRG/genthat/branch/master/graph/badge.svg)](https://codecov.io/gh/PRL-PRG/genthat)
+[![r-universe](https://prl-prg.r-universe.dev/genthat/badges/version)](https://prl-prg.r-universe.dev/genthat)
 [![mutator](https://img.shields.io/endpoint?url=https%3A%2F%2Fprl-prg.github.io%2Fgenthat%2Fmutation-score.json)](https://github.com/PRL-PRG/genthat/actions/workflows/mutation-testing.yaml)
 <!-- badges: end -->
 
